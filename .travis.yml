@@ -1,4 +1,6 @@
 language: c # defaults to ruby
+sudo: required
+dist: trusty
 addons:
   apt_packages:
   - zsh
