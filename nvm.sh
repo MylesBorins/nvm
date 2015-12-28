@@ -1240,8 +1240,10 @@ nvm_install_iojs_source() {
   VERSION="$(nvm_strip_iojs_prefix "$1")"
   local PREFIXED_VERSION
   PREFIXED_VERSION="$(nvm_add_iojs_prefix "$VERSION")"
+  local NVM_MAKE_JOBS
+  NVM_MAKE_JOBS="$2"
   local ADDITIONAL_PARAMETERS
-  ADDITIONAL_PARAMETERS="$2"
+  ADDITIONAL_PARAMETERS="$3"
 
   local NVM_ARCH
   NVM_ARCH="$(nvm_get_arch)"
@@ -1289,9 +1291,9 @@ nvm_install_iojs_source() {
     command tar -xzf "$tmptarball" -C "$tmpdir" && \
     cd "$tmpdir/$PREFIXED_VERSION" && \
     ./configure --prefix="$VERSION_PATH" $ADDITIONAL_PARAMETERS && \
-    $make $MAKE_CXX && \
+    $make -j $NVM_MAKE_JOBS $MAKE_CXX && \
     command rm -f "$VERSION_PATH" 2>/dev/null && \
-    $make $MAKE_CXX install
+    $make -j $NVM_MAKE_JOBS $MAKE_CXX install
   ); then
     return 0
   else
@@ -1772,7 +1774,7 @@ nvm() {
             NVM_INSTALL_SUCCESS=true
           fi
         elif [ "$NVM_IOJS" = true ]; then
-          if nvm_install_iojs_source "$VERSION" "$ADDITIONAL_PARAMETERS"; then
+          if nvm_install_iojs_source "$VERSION" "$NVM_MAKE_JOBS" "$ADDITIONAL_PARAMETERS"; then
             NVM_INSTALL_SUCCESS=true
           fi
         elif [ "$NVM_NODE_MERGED" = true ]; then
