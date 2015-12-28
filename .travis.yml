@@ -5,6 +5,11 @@ addons:
   apt_packages:
   - zsh
   - ksh
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
 before_install:
   - curl --version
   - wget --version

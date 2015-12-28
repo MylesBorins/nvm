@@ -247,7 +247,7 @@ On Arch Linux and other systems using python3 by default, before running *instal
 
       export PYTHON=python2
 
-After the v0.8.6 release of node, nvm tries to install from binary packages. But in some systems, the official binary packages don't work due to incompatibility of shared libs. In such cases, use `-s` option to force install from source:
+After the v0.8.6 release of node, nvm tries to install from binary packages. But in some systems, the official binary packages don't work due to incompatibility of shared libs. In such cases, use `-s` option to force install from source (note that v1.0 and greater require [gcc v4.8 or higher](https://github.com/nodejs/node/commit/48774ec027a28cca17656659d316bb7ed8d6f33c)):
 
     nvm install -s 0.8.6
 
